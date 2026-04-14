@@ -22,15 +22,22 @@ public class TipRacunara extends AbstractDomainObject {
     }
 
     public TipRacunara(Long tipRacunaraID, String naziv) {
-        this.tipRacunaraID = tipRacunaraID;
-        this.naziv = naziv;
+        setTipRacunaraID(tipRacunaraID);
+        setNaziv(naziv);
     }
 
     public String getNaziv() {
         return naziv;
     }
-
+    
     public void setNaziv(String naziv) {
+        if (naziv == null) {
+            throw new NullPointerException("Naziv ne sme biti null.");
+        }
+
+        if (naziv.isEmpty()) {
+            throw new IllegalArgumentException("Naziv ne sme biti prazan.");
+        }
         this.naziv = naziv;
     }
 
@@ -39,6 +46,13 @@ public class TipRacunara extends AbstractDomainObject {
     }
 
     public void setTipRacunaraID(Long tipRacunaraID) {
+        if (tipRacunaraID == null) {
+            throw new NullPointerException("ID ne sme biti null.");
+        }
+
+        if (tipRacunaraID <= 0) {
+            throw new IllegalArgumentException("ID mora biti pozitivan broj.");
+        }
         this.tipRacunaraID = tipRacunaraID;
     }
 

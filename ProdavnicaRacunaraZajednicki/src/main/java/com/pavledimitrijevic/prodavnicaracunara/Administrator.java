@@ -9,7 +9,6 @@ import java.util.Objects;
  *
  * @author PAVLE
  */
-
 public class Administrator extends AbstractDomainObject {
 
     private Long administratorID;
@@ -22,11 +21,11 @@ public class Administrator extends AbstractDomainObject {
     }
 
     public Administrator(Long administratorID, String ime, String prezime, String username, String password) {
-        this.administratorID = administratorID;
-        this.ime = ime;
-        this.prezime = prezime;
-        this.username = username;
-        this.password = password;
+        setAdministratorID(administratorID);
+        setIme(ime);
+        setPrezime(prezime);
+        setUsername(username);
+        setPassword(password);
     }
 
     @Override
@@ -52,6 +51,14 @@ public class Administrator extends AbstractDomainObject {
     }
 
     public void setAdministratorID(Long administratorID) {
+        if (administratorID == null) {
+            throw new NullPointerException("ID ne sme biti null.");
+        }
+
+        if (administratorID <= 0) {
+            throw new IllegalArgumentException("ID mora biti pozitivan broj.");
+        }
+
         this.administratorID = administratorID;
     }
 
@@ -60,6 +67,14 @@ public class Administrator extends AbstractDomainObject {
     }
 
     public void setUsername(String username) {
+        if (username == null) {
+            throw new NullPointerException("Username ne sme biti null.");
+        }
+
+        if (username.isEmpty()) {
+            throw new IllegalArgumentException("Username ne sme biti prazan.");
+        }
+
         this.username = username;
     }
 
@@ -68,6 +83,14 @@ public class Administrator extends AbstractDomainObject {
     }
 
     public void setPassword(String password) {
+        if (password == null) {
+            throw new NullPointerException("Password ne sme biti null.");
+        }
+
+        if (password.length() < 8) {
+            throw new IllegalArgumentException("Password mora imati najmanje 8 karaktera.");
+        }
+
         this.password = password;
     }
 
@@ -76,6 +99,14 @@ public class Administrator extends AbstractDomainObject {
     }
 
     public void setIme(String ime) {
+        if (ime == null) {
+            throw new NullPointerException("Ime ne sme biti null.");
+        }
+
+        if (ime.trim().isEmpty()) {
+            throw new IllegalArgumentException("Ime ne sme biti prazno.");
+        }
+
         this.ime = ime;
     }
 
@@ -84,6 +115,14 @@ public class Administrator extends AbstractDomainObject {
     }
 
     public void setPrezime(String prezime) {
+        if (prezime == null) {
+            throw new NullPointerException("Prezime ne sme biti null.");
+        }
+
+        if (prezime.trim().isEmpty()) {
+            throw new IllegalArgumentException("Prezime ne sme biti prazno.");
+        }
+
         this.prezime = prezime;
     }
 
