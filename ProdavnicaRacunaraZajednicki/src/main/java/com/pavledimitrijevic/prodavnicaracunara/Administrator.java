@@ -6,21 +6,59 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 /**
+ * * Predstavlja Administratora sa osnovnim podacima o njemu i pristupu.
+ * <p>
+ * Svaki administrator ima jedinstveni ID, ime, prezime, username i password.
+ * </p>
  *
  * @author PAVLE
  */
-
 public class Administrator extends AbstractDomainObject {
 
+    /**
+     * ID administratora kao Long
+     */
     private Long administratorID;
+
+    /**
+     * Ime administratora kao String
+     */
     private String ime;
+
+    /**
+     * Prezime administratora kao String
+     */
     private String prezime;
+
+    /**
+     * Username adminsitratora kao String
+     */
     private String username;
+
+    /**
+     * Password administratora kao String
+     */
     private String password;
 
+    /**
+     * Inicijalizuje objekat klase Adminstrator sa atributima koje imaju default
+     * vrednosti.
+     */
     public Administrator() {
     }
 
+    /**
+     * Inicijalizuje objekat klase Administrator sa svim parametrima.
+     *
+     * @param administratorID Jedinstveni ID administratora. Mora biti pozitivan
+     * broj.
+     * @param ime Ime administratora. Ne sme biti null niti prazan string.
+     * @param prezime Prezime administratora. Ne sme biti null niti prazan
+     * string.
+     * @param username Username administratora. Ne sme biti null niti prazan
+     * string.
+     * @param password Password administratora. Mora imati najmanje 8 karaktera.
+     */
     public Administrator(Long administratorID, String ime, String prezime, String username, String password) {
         this.administratorID = administratorID;
         this.ime = ime;
@@ -29,6 +67,17 @@ public class Administrator extends AbstractDomainObject {
         this.password = password;
     }
 
+    /**
+     * Poredi dva administratora po njihovom ID-u.
+     *
+     * @param obj Objekat sa kojim se poredi ID
+     * @return
+     * <ul>
+     * <li> true ako je uneti objekat razlicit od null, ako je objekat klase
+     * Administrator i ako je ID isti ID prvog Administratora </li>
+     * <li> false u svim ostalim slucajevima </li>
+     * </ul>
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -47,49 +96,121 @@ public class Administrator extends AbstractDomainObject {
         return true;
     }
 
+    /**
+     * Vraca tekstualni prikaz administratora.
+     *
+     * @return String sa podacima o imenu i prezimenu administratora u formatu
+     * ime + " " + prezime
+     */
+    @Override
+    public String toString() {
+        return ime + " " + prezime;
+    }
+
+        /**
+     * Vraca ID administratora.
+     *
+     * @return administratorID
+     */
     public Long getAdministratorID() {
         return administratorID;
     }
 
+        /**
+     * Postavlja ID administratora. ID mora biti pozitivan broj i ne sme biti
+     * null.
+     *
+     * @param administratorID ID administratora
+     * @throws java.lang.NullPointerException ako je ID null
+     * @throws java.lang.IllegalArgumentException ako je ID manji ili jednak
+     * nuli
+     */
     public void setAdministratorID(Long administratorID) {
         this.administratorID = administratorID;
     }
-
+    
+        /**
+     * Vraca username administratora.
+     *
+     * @return username
+     */
     public String getUsername() {
         return username;
     }
 
+        /**
+     * Postavlja username administratora. Username ne sme biti null niti prazan
+     * string.
+     *
+     * @param username Username administratora
+     * @throws java.lang.NullPointerException ako je username null
+     * @throws java.lang.IllegalArgumentException ako je username prazan string
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+        /**
+     * Vraca password administratora.
+     *
+     * @return password
+     */
     public String getPassword() {
         return password;
     }
 
+        /**
+     * Postavlja password administratora. Password ne sme biti null i mora imati
+     * najmanje 8 karaktera.
+     *
+     * @param password Password administratora
+     * @throws java.lang.NullPointerException ako je password null
+     * @throws java.lang.IllegalArgumentException ako je password kraci od 8
+     * karaktera
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+        /**
+     * Vraca ime administratora.
+     *
+     * @return ime
+     */
     public String getIme() {
         return ime;
     }
 
+        /**
+     * Postavlja ime administratora. Ime ne sme biti null niti prazan string.
+     *
+     * @param ime Ime administratora
+     * @throws java.lang.NullPointerException ako je ime null
+     * @throws java.lang.IllegalArgumentException ako je ime prazan string
+     */
     public void setIme(String ime) {
         this.ime = ime;
     }
 
+        /**
+     * Vraca prezime administratora.
+     *
+     * @return prezime
+     */
     public String getPrezime() {
         return prezime;
     }
 
+        /**
+     * Postavlja prezime administratora. Prezime ne sme biti null niti prazan
+     * string.
+     *
+     * @param prezime Prezime administratora
+     * @throws java.lang.NullPointerException ako je prezime null
+     * @throws java.lang.IllegalArgumentException ako je prezime prazan string
+     */
     public void setPrezime(String prezime) {
         this.prezime = prezime;
-    }
-
-    @Override
-    public String toString() {
-        return ime + " " + prezime;
     }
 
     @Override
