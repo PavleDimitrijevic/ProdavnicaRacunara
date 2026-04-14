@@ -16,6 +16,7 @@ public class Racunar extends AbstractDomainObject {
     private String opis;
     private TipRacunara tipRacunara;
     private ArrayList<Komponenta> komponente;
+    private Garancija garancija;
 
     @Override
     public String toString() {

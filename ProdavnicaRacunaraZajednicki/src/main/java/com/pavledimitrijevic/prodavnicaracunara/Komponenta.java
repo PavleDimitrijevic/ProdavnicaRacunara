@@ -13,6 +13,7 @@ public class Komponenta extends AbstractDomainObject {
     private Racunar racunar;
     private int rb;
     private String naziv;
+    private ProizvodjacKomponente proizvodjac;
 
     public Komponenta() {
     }
