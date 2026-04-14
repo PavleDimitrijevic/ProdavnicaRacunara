@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class Komponenta extends AbstractDomainObject {
 
-    private Racunar racunar;
+    private transient Racunar racunar;
     private int rb;
     private String naziv;
     private ProizvodjacKomponente proizvodjac;
@@ -19,9 +19,16 @@ public class Komponenta extends AbstractDomainObject {
     }
 
     public Komponenta(Racunar racunar, int rb, String naziv) {
-        this.racunar = racunar;
-        this.rb = rb;
-        this.naziv = naziv;
+        setRacunar(racunar);
+        setRb(rb);
+        setNaziv(naziv);
+    }
+
+    public Komponenta(Racunar racunar, int rb, String naziv, ProizvodjacKomponente proizvodjac) {
+        setRacunar(racunar);
+        setRb(rb);
+        setNaziv(naziv);
+        setProizvodjac(proizvodjac);
     }
 
     public String getNaziv() {
@@ -29,6 +36,13 @@ public class Komponenta extends AbstractDomainObject {
     }
 
     public void setNaziv(String naziv) {
+        if (naziv == null) {
+            throw new NullPointerException("Naziv ne sme biti null.");
+        }
+
+        if (naziv.trim().isEmpty()) {
+            throw new IllegalArgumentException("Naziv ne sme biti prazan.");
+        }
         this.naziv = naziv;
     }
 
@@ -37,6 +51,9 @@ public class Komponenta extends AbstractDomainObject {
     }
 
     public void setRacunar(Racunar racunar) {
+        if (racunar == null) {
+            throw new NullPointerException("Racunar ne sme biti null.");
+        }
         this.racunar = racunar;
     }
 
@@ -45,7 +62,21 @@ public class Komponenta extends AbstractDomainObject {
     }
 
     public void setRb(int rb) {
+        if (rb <= 0) {
+            throw new IllegalArgumentException("Redni broj mora biti pozitivan broj.");
+        }
         this.rb = rb;
+    }
+
+    public ProizvodjacKomponente getProizvodjac() {
+        return proizvodjac;
+    }
+
+    public void setProizvodjac(ProizvodjacKomponente proizvodjac) {
+        if (proizvodjac == null) {
+            throw new NullPointerException("Proizvodjac ne sme biti null.");
+        }
+        this.proizvodjac = proizvodjac;
     }
 
     @Override
