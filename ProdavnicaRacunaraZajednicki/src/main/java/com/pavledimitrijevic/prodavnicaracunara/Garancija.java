@@ -16,9 +16,9 @@ public class Garancija implements Serializable {
     }
 
     public Garancija(Long garancijaID, int trajanjeMeseci, String opis) {
-        this.garancijaID = garancijaID;
-        this.trajanjeMeseci = trajanjeMeseci;
-        this.opis = opis;
+        setGarancijaID(garancijaID);
+        setTrajanjeMeseci(trajanjeMeseci);
+        setOpis(opis);
     }
 
     public Long getGarancijaID() {
@@ -26,6 +26,14 @@ public class Garancija implements Serializable {
     }
 
     public void setGarancijaID(Long garancijaID) {
+        if (garancijaID == null) {
+            throw new NullPointerException("ID garancije ne sme biti null.");
+        }
+
+        if (garancijaID <= 0) {
+            throw new IllegalArgumentException("ID garancije mora biti pozitivan broj.");
+        }
+
         this.garancijaID = garancijaID;
     }
 
@@ -34,6 +42,10 @@ public class Garancija implements Serializable {
     }
 
     public void setTrajanjeMeseci(int trajanjeMeseci) {
+        if (trajanjeMeseci <= 0) {
+            throw new IllegalArgumentException("Trajanje garancije mora biti vece od nule.");
+        }
+
         this.trajanjeMeseci = trajanjeMeseci;
     }
 
@@ -42,6 +54,14 @@ public class Garancija implements Serializable {
     }
 
     public void setOpis(String opis) {
+        if (opis == null) {
+            throw new NullPointerException("Opis garancije ne sme biti null.");
+        }
+
+        if (opis.trim().isEmpty()) {
+            throw new IllegalArgumentException("Opis garancije ne sme biti prazan.");
+        }
+
         this.opis = opis;
     }
 

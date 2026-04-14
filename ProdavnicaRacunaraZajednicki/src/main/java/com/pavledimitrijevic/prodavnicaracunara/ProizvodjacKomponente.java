@@ -15,8 +15,8 @@ public class ProizvodjacKomponente implements Serializable {
     }
 
     public ProizvodjacKomponente(Long proizvodjacID, String naziv) {
-        this.proizvodjacID = proizvodjacID;
-        this.naziv = naziv;
+        setProizvodjacID(proizvodjacID);
+        setNaziv(naziv);
     }
 
     public Long getProizvodjacID() {
@@ -24,6 +24,14 @@ public class ProizvodjacKomponente implements Serializable {
     }
 
     public void setProizvodjacID(Long proizvodjacID) {
+        if (proizvodjacID == null) {
+            throw new NullPointerException("ID proizvodjaca ne sme biti null.");
+        }
+
+        if (proizvodjacID <= 0) {
+            throw new IllegalArgumentException("ID proizvodjaca mora biti pozitivan broj.");
+        }
+
         this.proizvodjacID = proizvodjacID;
     }
 
@@ -32,7 +40,14 @@ public class ProizvodjacKomponente implements Serializable {
     }
 
     public void setNaziv(String naziv) {
+        if (naziv == null) {
+            throw new NullPointerException("Naziv proizvodjaca ne sme biti null.");
+        }
+
+        if (naziv.trim().isEmpty()) {
+            throw new IllegalArgumentException("Naziv proizvodjaca ne sme biti prazan.");
+        }
+
         this.naziv = naziv;
     }
-
 }

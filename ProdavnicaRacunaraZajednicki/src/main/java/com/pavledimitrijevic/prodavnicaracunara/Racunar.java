@@ -27,12 +27,24 @@ public class Racunar extends AbstractDomainObject {
     }
 
     public Racunar(Long racunarID, String naziv, double cenaPoKomadu, String opis, TipRacunara tipRacunara, ArrayList<Komponenta> komponente) {
-        this.racunarID = racunarID;
-        this.naziv = naziv;
-        this.cenaPoKomadu = cenaPoKomadu;
-        this.opis = opis;
-        this.tipRacunara = tipRacunara;
-        this.komponente = komponente;
+        setRacunarID(racunarID);
+        setNaziv(naziv);
+        setCenaPoKomadu(cenaPoKomadu);
+        setOpis(opis);
+        setTipRacunara(tipRacunara);
+        setKomponente(komponente);
+    }
+
+    public Racunar(Long racunarID, String naziv, double cenaPoKomadu, String opis,
+            TipRacunara tipRacunara, ArrayList<Komponenta> komponente,
+            Garancija garancija) {
+        setRacunarID(racunarID);
+        setNaziv(naziv);
+        setCenaPoKomadu(cenaPoKomadu);
+        setOpis(opis);
+        setTipRacunara(tipRacunara);
+        setKomponente(komponente);
+        setGarancija(garancija);
     }
 
     public ArrayList<Komponenta> getKomponente() {
@@ -40,6 +52,13 @@ public class Racunar extends AbstractDomainObject {
     }
 
     public void setKomponente(ArrayList<Komponenta> komponente) {
+        if (komponente == null) {
+            throw new NullPointerException("Lista komponenti ne sme biti null.");
+        }
+
+        if (komponente.isEmpty()) {
+            throw new IllegalArgumentException("Racunar mora imati bar jedanu komponentu.");
+        }
         this.komponente = komponente;
     }
 
@@ -48,6 +67,14 @@ public class Racunar extends AbstractDomainObject {
     }
 
     public void setRacunarID(Long racunarID) {
+        if (racunarID == null) {
+            throw new NullPointerException("ID ne sme biti null.");
+        }
+
+        if (racunarID <= 0) {
+            throw new IllegalArgumentException("ID mora biti pozitivan broj.");
+        }
+
         this.racunarID = racunarID;
     }
 
@@ -56,6 +83,14 @@ public class Racunar extends AbstractDomainObject {
     }
 
     public void setNaziv(String naziv) {
+        if (naziv == null) {
+            throw new NullPointerException("Naziv ne sme biti null.");
+        }
+
+        if (naziv.trim().isEmpty()) {
+            throw new IllegalArgumentException("Naziv ne sme biti prazan.");
+        }
+
         this.naziv = naziv;
     }
 
@@ -64,6 +99,9 @@ public class Racunar extends AbstractDomainObject {
     }
 
     public void setCenaPoKomadu(double cenaPoKomadu) {
+        if (cenaPoKomadu <= 0) {
+            throw new IllegalArgumentException("Cena po komadu mora biti veca od nule.");
+        }
         this.cenaPoKomadu = cenaPoKomadu;
     }
 
@@ -72,6 +110,13 @@ public class Racunar extends AbstractDomainObject {
     }
 
     public void setOpis(String opis) {
+        if (opis == null) {
+            throw new NullPointerException("Opis ne sme biti null.");
+        }
+
+        if (opis.trim().isEmpty()) {
+            throw new IllegalArgumentException("Opis ne sme biti prazan.");
+        }
         this.opis = opis;
     }
 
@@ -80,7 +125,21 @@ public class Racunar extends AbstractDomainObject {
     }
 
     public void setTipRacunara(TipRacunara tipRacunara) {
+        if (tipRacunara == null) {
+            throw new NullPointerException("Tip racunara ne sme biti null.");
+        }
         this.tipRacunara = tipRacunara;
+    }
+
+    public Garancija getGarancija() {
+        return garancija;
+    }
+
+    public void setGarancija(Garancija garancija) {
+        if (garancija == null) {
+            throw new NullPointerException("Garancija ne sme biti null.");
+        }
+        this.garancija = garancija;
     }
 
     @Override

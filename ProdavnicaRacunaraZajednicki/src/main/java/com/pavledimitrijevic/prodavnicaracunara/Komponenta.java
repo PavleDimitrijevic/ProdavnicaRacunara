@@ -24,6 +24,13 @@ public class Komponenta extends AbstractDomainObject {
         setNaziv(naziv);
     }
 
+    public Komponenta(Racunar racunar, int rb, String naziv, ProizvodjacKomponente proizvodjac) {
+        setRacunar(racunar);
+        setRb(rb);
+        setNaziv(naziv);
+        setProizvodjac(proizvodjac);
+    }
+
     public String getNaziv() {
         return naziv;
     }
@@ -59,6 +66,17 @@ public class Komponenta extends AbstractDomainObject {
             throw new IllegalArgumentException("Redni broj mora biti pozitivan broj.");
         }
         this.rb = rb;
+    }
+
+    public ProizvodjacKomponente getProizvodjac() {
+        return proizvodjac;
+    }
+
+    public void setProizvodjac(ProizvodjacKomponente proizvodjac) {
+        if (proizvodjac == null) {
+            throw new NullPointerException("Proizvodjac ne sme biti null.");
+        }
+        this.proizvodjac = proizvodjac;
     }
 
     @Override
