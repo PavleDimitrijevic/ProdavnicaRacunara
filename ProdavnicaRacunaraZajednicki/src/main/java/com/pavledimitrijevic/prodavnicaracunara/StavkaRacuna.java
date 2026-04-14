@@ -17,11 +17,11 @@ public class StavkaRacuna extends AbstractDomainObject {
     private Racunar racunar;
 
     public StavkaRacuna(Racun racun, int rb, int kolicina, double cena, Racunar racunar) {
-        this.racun = racun;
-        this.rb = rb;
-        this.kolicina = kolicina;
-        this.cena = cena;
-        this.racunar = racunar;
+        setRacun(racun);
+        setRb(rb);
+        setKolicina(kolicina);
+        setCena(cena);
+        setRacunar(racunar);
     }
 
     public StavkaRacuna() {
@@ -32,6 +32,9 @@ public class StavkaRacuna extends AbstractDomainObject {
     }
 
     public void setRacunar(Racunar racunar) {
+        if (racunar == null) {
+            throw new NullPointerException("Racunar ne sme biti null.");
+        }
         this.racunar = racunar;
     }
 
@@ -40,6 +43,9 @@ public class StavkaRacuna extends AbstractDomainObject {
     }
 
     public void setRacun(Racun racun) {
+        if (racun == null) {
+            throw new NullPointerException("Racun ne sme biti null.");
+        }
         this.racun = racun;
     }
 
@@ -48,6 +54,9 @@ public class StavkaRacuna extends AbstractDomainObject {
     }
 
     public void setRb(int rb) {
+        if (rb <= 0) {
+            throw new IllegalArgumentException("Redni broj mora biti pozitivan broj.");
+        }
         this.rb = rb;
     }
 
@@ -56,6 +65,9 @@ public class StavkaRacuna extends AbstractDomainObject {
     }
 
     public void setKolicina(int kolicina) {
+        if (kolicina <= 0) {
+            throw new IllegalArgumentException("Kolicina mora biti veca od nule.");
+        }
         this.kolicina = kolicina;
     }
 
@@ -64,6 +76,9 @@ public class StavkaRacuna extends AbstractDomainObject {
     }
 
     public void setCena(double cena) {
+        if (cena <= 0) {
+            throw new IllegalArgumentException("Cena mora biti veca od nule.");
+        }
         this.cena = cena;
     }
 
