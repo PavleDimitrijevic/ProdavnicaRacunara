@@ -29,6 +29,16 @@ public class AdministratorTest {
     @Mock
     private ResultSet rs;
 
+    @BeforeEach
+    public void setUp() {
+        administrator = new Administrator(1L, "Pavle", "Dimitrijevic", "pavle123", "pavle123");
+    }
+
+    @AfterEach
+    public void tearDown() {
+        administrator = null;
+    }
+
     @Test
     public void AdministratorTestPrazan() {
         assertNotNull(administrator);
@@ -42,16 +52,6 @@ public class AdministratorTest {
         assertEquals("Dimitrijevic", administrator.getPrezime());
         assertEquals("pavle123", administrator.getUsername());
         assertEquals("pavle123", administrator.getPassword());
-    }
-
-    @BeforeEach
-    public void setUp() {
-        administrator = new Administrator(1L, "Pavle", "Dimitrijevic", "pavle123", "pavle123");
-    }
-
-    @AfterEach
-    public void tearDown() {
-        administrator = null;
     }
 
     @ParameterizedTest
@@ -232,11 +232,10 @@ public class AdministratorTest {
         when(rs.next()).thenReturn(true).thenReturn(false);
 
         when(rs.getLong("AdministratorID")).thenReturn(testID);
-        when(rs.getString("Ime")).thenReturn(testIme); 
+        when(rs.getString("Ime")).thenReturn(testIme);
         when(rs.getString("Prezime")).thenReturn(testPrezime);
         when(rs.getString("Username")).thenReturn(testUser);
         when(rs.getString("Password")).thenReturn(testPass);
-        
 
         ArrayList<AbstractDomainObject> lista = administrator.vratiListu(rs);
 

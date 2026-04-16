@@ -122,21 +122,13 @@ public class Racunar extends AbstractDomainObject {
     }
 
     /**
-     * Postavlja listu komponenti. Lista komponenti ne sme biti null niti
-     * prazna.
+     * Postavlja listu komponenti.
+     * Nema logicke kontrole za null ili praznu listu komponenti,
+     * jer u metodi vratiListu() za listu komponenti prosledjujemo null.
      *
      * @param komponente Lista komponenti
-     * @throws java.lang.NullPointerException ako je lista null
-     * @throws java.lang.IllegalArgumentException ako je lista prazna
      */
     public void setKomponente(ArrayList<Komponenta> komponente) {
-        if (komponente == null) {
-            throw new NullPointerException("Lista komponenti ne sme biti null.");
-        }
-
-        if (komponente.isEmpty()) {
-            throw new IllegalArgumentException("Racunar mora imati bar jedanu komponentu.");
-        }
         this.komponente = komponente;
     }
 
