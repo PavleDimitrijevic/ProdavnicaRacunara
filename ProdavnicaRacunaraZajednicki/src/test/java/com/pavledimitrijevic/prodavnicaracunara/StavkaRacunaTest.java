@@ -1,223 +1,268 @@
 package com.pavledimitrijevic.prodavnicaracunara;
 
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
  *
  * @author PAVLE
  */
+@ExtendWith(MockitoExtension.class)
 public class StavkaRacunaTest {
-    
-    public StavkaRacunaTest() {
-    }
-    
-    @BeforeAll
-    public static void setUpClass() {
-    }
-    
-    @AfterAll
-    public static void tearDownClass() {
-    }
-    
+
+    private StavkaRacuna stavkaRacuna;
+    private Racun racun;
+    private Racunar racunar;
+
+    @Mock
+    private ResultSet rs;
+
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws Exception {
+        Administrator administrator = new Administrator(1L, "Pavle", "Dimitrijevic", "pavle123", "pavle123");
+        ArrayList<StavkaRacuna> stavke = new ArrayList<>();
+        stavke.add(stavkaRacuna);
+        racun = new Racun(1L, new Date(), 800000.0, administrator, stavke);
+
+        TipRacunara tip = new TipRacunara(1L, "Gaming racunar");
+        ArrayList<Komponenta> komponente = new ArrayList<>();
+        komponente.add(new Komponenta());
+        racunar = new Racunar(1L, "Gaming Beast X2", 200000.0, "Odlican", tip, komponente);
+
+        stavkaRacuna = new StavkaRacuna(racun, 1, 2, 400000.0, racunar);
     }
-    
+
     @AfterEach
     public void tearDown() {
+        stavkaRacuna = null;
+        racun = null;
+        racunar = null;
     }
 
     @Test
-    public void testGetRacunar() {
-        System.out.println("getRacunar");
-        StavkaRacuna instance = new StavkaRacuna();
-        Racunar expResult = null;
-        Racunar result = instance.getRacunar();
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+    public void StavkaRacunaTestPrazan() {
+        assertNotNull(stavkaRacuna);
     }
 
     @Test
-    public void testSetRacunar() {
-        System.out.println("setRacunar");
-        Racunar racunar = null;
-        StavkaRacuna instance = new StavkaRacuna();
-        instance.setRacunar(racunar);
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testGetRacun() {
-        System.out.println("getRacun");
-        StavkaRacuna instance = new StavkaRacuna();
-        Racun expResult = null;
-        Racun result = instance.getRacun();
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+    public void StavkaRacunaTest() {
+        assertNotNull(stavkaRacuna);
+        assertEquals(racun, stavkaRacuna.getRacun());
+        assertEquals(1, stavkaRacuna.getRb());
+        assertEquals(2, stavkaRacuna.getKolicina());
+        assertEquals(400000.0, stavkaRacuna.getCena());
+        assertEquals(racunar, stavkaRacuna.getRacunar());
     }
 
     @Test
     public void testSetRacun() {
-        System.out.println("setRacun");
-        Racun racun = null;
-        StavkaRacuna instance = new StavkaRacuna();
-        instance.setRacun(racun);
-        fail("The test case is a prototype.");
+        assertEquals(racun, stavkaRacuna.getRacun());
     }
 
     @Test
-    public void testGetRb() {
-        System.out.println("getRb");
-        StavkaRacuna instance = new StavkaRacuna();
-        int expResult = 0;
-        int result = instance.getRb();
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+    void testSetRacunNull() {
+        assertThrows(java.lang.NullPointerException.class, () -> stavkaRacuna.setRacun(null));
     }
 
     @Test
     public void testSetRb() {
-        System.out.println("setRb");
-        int rb = 0;
-        StavkaRacuna instance = new StavkaRacuna();
-        instance.setRb(rb);
-        fail("The test case is a prototype.");
+        assertEquals(1, stavkaRacuna.getRb());
     }
 
     @Test
-    public void testGetKolicina() {
-        System.out.println("getKolicina");
-        StavkaRacuna instance = new StavkaRacuna();
-        int expResult = 0;
-        int result = instance.getKolicina();
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+    void testSetRbNula() {
+        assertThrows(java.lang.IllegalArgumentException.class, () -> stavkaRacuna.setRb(0));
+    }
+
+    @Test
+    void testSetRbNegative() {
+        assertThrows(java.lang.IllegalArgumentException.class, () -> stavkaRacuna.setRb(-1));
     }
 
     @Test
     public void testSetKolicina() {
-        System.out.println("setKolicina");
-        int kolicina = 0;
-        StavkaRacuna instance = new StavkaRacuna();
-        instance.setKolicina(kolicina);
-        fail("The test case is a prototype.");
+        assertEquals(2, stavkaRacuna.getKolicina());
     }
 
     @Test
-    public void testGetCena() {
-        System.out.println("getCena");
-        StavkaRacuna instance = new StavkaRacuna();
-        double expResult = 0.0;
-        double result = instance.getCena();
-        assertEquals(expResult, result, 0);
-        fail("The test case is a prototype.");
+    void testSetKolicinaNula() {
+        assertThrows(java.lang.IllegalArgumentException.class, () -> stavkaRacuna.setKolicina(0));
+    }
+
+    @Test
+    void testSetKolicinaNegative() {
+        assertThrows(java.lang.IllegalArgumentException.class, () -> stavkaRacuna.setKolicina(-1));
     }
 
     @Test
     public void testSetCena() {
-        System.out.println("setCena");
-        double cena = 0.0;
-        StavkaRacuna instance = new StavkaRacuna();
-        instance.setCena(cena);
-        fail("The test case is a prototype.");
+        assertEquals(400000.0, stavkaRacuna.getCena());
     }
 
     @Test
-    public void testNazivTabele() {
-        System.out.println("nazivTabele");
-        StavkaRacuna instance = new StavkaRacuna();
-        String expResult = "";
-        String result = instance.nazivTabele();
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+    void testSetCenaNula() {
+        assertThrows(java.lang.IllegalArgumentException.class, () -> stavkaRacuna.setCena(0.0));
     }
 
     @Test
-    public void testAlijas() {
-        System.out.println("alijas");
-        StavkaRacuna instance = new StavkaRacuna();
-        String expResult = "";
-        String result = instance.alijas();
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+    void testSetCenaNegative() {
+        assertThrows(java.lang.IllegalArgumentException.class, () -> stavkaRacuna.setCena(-400000.0));
     }
 
     @Test
-    public void testJoin() {
-        System.out.println("join");
-        StavkaRacuna instance = new StavkaRacuna();
-        String expResult = "";
-        String result = instance.join();
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+    public void testSetRacunar() {
+        assertEquals(racunar, stavkaRacuna.getRacunar());
     }
 
     @Test
-    public void testVratiListu() throws Exception {
-        System.out.println("vratiListu");
-        ResultSet rs = null;
-        StavkaRacuna instance = new StavkaRacuna();
-        ArrayList<AbstractDomainObject> expResult = null;
-        ArrayList<AbstractDomainObject> result = instance.vratiListu(rs);
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+    public void testSetRacunarNull() {
+        assertThrows(java.lang.NullPointerException.class, () -> stavkaRacuna.setRacunar(null));
     }
 
     @Test
-    public void testKoloneZaInsert() {
-        System.out.println("koloneZaInsert");
-        StavkaRacuna instance = new StavkaRacuna();
-        String expResult = "";
-        String result = instance.koloneZaInsert();
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+    void testNazivTabele() {
+        assertEquals(" StavkaRacuna ", stavkaRacuna.nazivTabele());
     }
 
     @Test
-    public void testUslov() {
-        System.out.println("uslov");
-        StavkaRacuna instance = new StavkaRacuna();
-        String expResult = "";
-        String result = instance.uslov();
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+    void testAlijas() {
+        assertEquals(" sr ", stavkaRacuna.alijas());
     }
 
     @Test
-    public void testVrednostiZaInsert() {
-        System.out.println("vrednostiZaInsert");
-        StavkaRacuna instance = new StavkaRacuna();
-        String expResult = "";
-        String result = instance.vrednostiZaInsert();
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+    void testJoin() {
+        String expectedJoin = " JOIN RACUNAR R ON (R.RACUNARID = SR.RACUNARID) "
+                + "JOIN TIPRACUNARA TR ON (TR.TIPRACUNARAID = R.TIPRACUNARAID) "
+                + "JOIN RACUN RA ON (RA.RACUNID = SR.RACUNID) "
+                + "JOIN ADMINISTRATOR A ON (A.ADMINISTRATORID = RA.ADMINISTRATORID) ";
+        assertEquals(expectedJoin, stavkaRacuna.join());
     }
 
     @Test
-    public void testVrednostiZaUpdate() {
-        System.out.println("vrednostiZaUpdate");
-        StavkaRacuna instance = new StavkaRacuna();
-        String expResult = "";
-        String result = instance.vrednostiZaUpdate();
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+    void testKoloneZaInsert() {
+        assertEquals(" (racunID, rb, kolicina, cena, racunarID) ", stavkaRacuna.koloneZaInsert());
     }
 
     @Test
-    public void testUslovZaSelect() {
-        System.out.println("uslovZaSelect");
-        StavkaRacuna instance = new StavkaRacuna();
-        String expResult = "";
-        String result = instance.uslovZaSelect();
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+    void testUslov() {
+        assertEquals(" racunID = 1 AND RB = 1", stavkaRacuna.uslov());
     }
-    
+
+    @Test
+    void testVrednostiZaInsert() {
+        assertEquals(" 1, 1,  2, 400000.0, 1", stavkaRacuna.vrednostiZaInsert());
+    }
+
+    @Test
+    void testVrednostiZaUpdate() {
+        assertEquals("", stavkaRacuna.vrednostiZaUpdate());
+    }
+
+    @Test
+    void testUslovZaSelect() {
+        assertEquals(" WHERE RA.RACUNID = 1", stavkaRacuna.uslovZaSelect());
+    }
+
+    @Test
+    void testVratiListu() throws SQLException {
+        Long adminID = 10L;
+        String adminIme = "Admin";
+        String adminPrezime = "Test";
+        String adminUser = "admin1";
+        String adminPass = "pass123456";
+
+        Long racunID = 200L;
+        Timestamp datumVreme = new Timestamp(new Date().getTime());
+        double racunCena = 400000.0;
+
+        Long tipID = 30L;
+        String tipNaziv = "Gaming racunar";
+
+        Long racunarID = 40L;
+        String racunarNaziv = "Gaming Beast X2";
+        double racunarCena = 200000.0;
+        String opis = "Odlican";
+
+        int rb = 1;
+        int kolicina = 2;
+        double stavkaCena = 400000.0;
+
+        when(rs.next()).thenReturn(true).thenReturn(false);
+
+        when(rs.getLong("AdministratorID")).thenReturn(adminID);
+        when(rs.getString("Ime")).thenReturn(adminIme);
+        when(rs.getString("Prezime")).thenReturn(adminPrezime);
+        when(rs.getString("Username")).thenReturn(adminUser);
+        when(rs.getString("Password")).thenReturn(adminPass);
+
+        when(rs.getLong("racunID")).thenReturn(racunID);
+        when(rs.getTimestamp("datumVreme")).thenReturn(datumVreme);
+        when(rs.getDouble("ra.cena")).thenReturn(racunCena);
+
+        when(rs.getLong("TipRacunaraID")).thenReturn(tipID);
+        when(rs.getString("tr.Naziv")).thenReturn(tipNaziv);
+
+        when(rs.getLong("racunarID")).thenReturn(racunarID);
+        when(rs.getString("r.naziv")).thenReturn(racunarNaziv);
+        when(rs.getDouble("cenaPoKomadu")).thenReturn(racunarCena);
+        when(rs.getString("opis")).thenReturn(opis);
+
+        when(rs.getInt("rb")).thenReturn(rb);
+        when(rs.getInt("kolicina")).thenReturn(kolicina);
+        when(rs.getDouble("sr.cena")).thenReturn(stavkaCena);
+
+        ArrayList<AbstractDomainObject> lista = stavkaRacuna.vratiListu(rs);
+
+        assertNotNull(lista);
+        assertEquals(1, lista.size());
+
+        StavkaRacuna sr = (StavkaRacuna) lista.get(0);
+        assertEquals(rb, sr.getRb());
+        assertEquals(kolicina, sr.getKolicina());
+        assertEquals(stavkaCena, sr.getCena());
+
+        Racunar r = sr.getRacunar();
+        assertNotNull(r);
+        assertEquals(racunarID, r.getRacunarID());
+        assertEquals(racunarNaziv, r.getNaziv());
+        assertEquals(racunarCena, r.getCenaPoKomadu());
+        assertEquals(opis, r.getOpis());
+
+        TipRacunara tr = r.getTipRacunara();
+        assertNotNull(tr);
+        assertEquals(tipID, tr.getTipRacunaraID());
+        assertEquals(tipNaziv, tr.getNaziv());
+
+        Racun ra = sr.getRacun();
+        assertNotNull(ra);
+        assertEquals(racunID, ra.getRacunID());
+        assertEquals(datumVreme, ra.getDatumVreme());
+        assertEquals(racunCena, ra.getCena());
+
+        Administrator a = ra.getAdministrator();
+        assertNotNull(a);
+        assertEquals(adminID, a.getAdministratorID());
+        assertEquals(adminIme, a.getIme());
+        assertEquals(adminPrezime, a.getPrezime());
+        assertEquals(adminUser, a.getUsername());
+        assertEquals(adminPass, a.getPassword());
+
+        verify(rs, times(1)).close();
+    }
+
 }
