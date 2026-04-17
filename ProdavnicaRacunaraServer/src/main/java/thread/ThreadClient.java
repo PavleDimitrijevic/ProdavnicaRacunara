@@ -44,7 +44,57 @@ public class ThreadClient extends Thread {
         Response response = new Response(null, null, ResponseStatus.Success);
         try {
             switch (request.getOperation()) {
-              
+                case Operation.ADD_ADMINISTRATOR:
+                    ServerController.getInstance().addAdministrator((Administrator) request.getData());
+                    break;
+                case Operation.ADD_RACUNAR:
+                    ServerController.getInstance().addRacunar((Racunar) request.getData());
+                    break;
+                case Operation.ADD_TIP_RACUNARA:
+                    ServerController.getInstance().addTipRacunara((TipRacunara) request.getData());
+                    break;
+                case Operation.ADD_RACUN:
+                    ServerController.getInstance().addRacun((Racun) request.getData());
+                    break;
+                case Operation.DELETE_ADMINISTRATOR:
+                    ServerController.getInstance().deleteAdministrator((Administrator) request.getData());
+                    break;
+                case Operation.DELETE_TIP_RACUNARA:
+                    ServerController.getInstance().deleteTipRacunara((TipRacunara) request.getData());
+                    break;
+                case Operation.DELETE_RACUNAR:
+                    ServerController.getInstance().deleteRacunar((Racunar) request.getData());
+                    break;
+                case Operation.UPDATE_ADMINISTRATOR:
+                    ServerController.getInstance().updateAdministrator((Administrator) request.getData());
+                    break;
+                case Operation.UPDATE_TIP_RACUNARA:
+                    ServerController.getInstance().updateTipRacunara((TipRacunara) request.getData());
+                    break;
+                case Operation.UPDATE_RACUNAR:
+                    ServerController.getInstance().updateRacunar((Racunar) request.getData());
+                    break;
+                case Operation.GET_ALL_ADMINISTRATOR:
+                    response.setData(ServerController.getInstance().getAllAdministrator());
+                    break;
+                case Operation.GET_ALL_RACUN:
+                    response.setData(ServerController.getInstance().getAllRacun((Administrator) request.getData()));
+                    break;
+                case Operation.GET_ALL_RACUNAR:
+                    response.setData(ServerController.getInstance().getAllRacunar((TipRacunara) request.getData()));
+                    break;
+                case Operation.GET_ALL_TIP_RACUNARA:
+                    response.setData(ServerController.getInstance().getAllTipRacunara());
+                    break;
+                case Operation.LOGIN:
+                    Administrator administrator = (Administrator) request.getData();
+                    Administrator a = ServerController.getInstance().login(administrator);
+                    response.setData(a);
+                    break;
+                case Operation.LOGOUT:
+                    Administrator ulogovani = (Administrator) request.getData();
+                    ServerController.getInstance().logout(ulogovani);
+                    break;
                 default:
                     return null;
             }
