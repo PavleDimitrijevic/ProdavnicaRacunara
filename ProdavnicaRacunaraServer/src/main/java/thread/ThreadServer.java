@@ -25,8 +25,8 @@ public class ThreadServer extends Thread {
             while (!serverSocket.isClosed()) {
                 Socket socket = serverSocket.accept();
                 System.out.println("Klijent se povezao!");
-                //ThreadClient th = new ThreadClient(socket);
-                //th.start();
+                ThreadClient th = new ThreadClient(socket);
+                th.start();
             }
         } catch (Exception e) {
             if (serverSocket.isClosed()) {
