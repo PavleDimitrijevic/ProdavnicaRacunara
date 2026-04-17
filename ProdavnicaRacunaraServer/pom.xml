@@ -2,28 +2,28 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.pavledimitrijevic</groupId>
-    <artifactId>ProdavnicaRacunaraZajednicki</artifactId>
+    <artifactId>ProdavnicaRacunaraServer</artifactId>
     <version>1.0.1</version>
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>19</maven.compiler.source>
+        <maven.compiler.target>19</maven.compiler.target>
+        <exec.mainClass>ProdavnicaRacunaraServer</exec.mainClass>
     </properties>
     
     <dependencies>
+        <dependency>
+            <groupId>com.pavledimitrijevic.prodavnicaracunara</groupId>
+            <artifactId>ProdavnicaRacunaraZajednicki</artifactId>
+            <version>1.0.1</version>
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>5.11.4</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-junit-jupiter</artifactId>
-            <version>5.7.0</version>
-            <scope>test</scope>
-        </dependency>       
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
@@ -36,6 +36,7 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
+    
     <build>
         <plugins>
             <plugin>
