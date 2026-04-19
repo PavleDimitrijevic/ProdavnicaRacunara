@@ -8,13 +8,32 @@ import java.util.ArrayList;
 import so.SistemskeOperacije;
 
 /**
+ * Sistemska operacija za ucitavanje svih racuna iz baze podataka.
+ * <p>
+ * Klasa nasledjuje apstraktnu klasu SistemskeOperacije i implementira metode
+ * validate() i execute().
+ * </p>
  *
  * @author PAVLE
  */
 public class SOGetAllRacun extends SistemskeOperacije {
 
+    /**
+     * Lista svih racuna izabranih iz baze.
+     */
     private ArrayList<Racun> lista;
 
+    /**
+     * Proverava ispravnost prosledjenog objekta pre nego sto se izvrsi
+     * ucitavanje iz baze.
+     * <p>
+     * Ova metoda proverava da li je objekat instanca klase Racun. Ako nije,
+     * baca se izuzetak i ucitavanje se ne izvrsava.
+     * </p>
+     *
+     * @param ado Domen objekat koji se proverava
+     * @throws java.lang.Exception ako objekat nije instanca klase Racun
+     */
     @Override
     protected void validate(AbstractDomainObject ado) throws Exception {
         if (!(ado instanceof Racun)) {
@@ -22,6 +41,19 @@ public class SOGetAllRacun extends SistemskeOperacije {
         }
     }
 
+    /**
+     * Izvrsava ucitavanje svih racuna iz baze podataka.
+     * <p>
+     * Poziva se samo ako je validacija uspesno prosla. Implementacija koristi
+     * select metodu iz klase DBBroker kako bi ucitala zapis iz baze podataka.
+     * Ucitava racune i stavke svih racuna.
+     * </p>
+     *
+     * @see DBBroker
+     * @param ado Domen objekat koji se ucitava
+     * @throws java.lang.Exception ako dodje do greske tokom izvrsavanja SQL
+     * komande za ucitavanje iz baze
+     */
     @Override
     protected void execute(AbstractDomainObject ado) throws Exception {
         ArrayList<AbstractDomainObject> racuni = DBBroker.getInstance().select(ado);
@@ -39,6 +71,11 @@ public class SOGetAllRacun extends SistemskeOperacije {
         }
     }
 
+    /**
+     * Vraca listu svih racuna i njihovih stavki ucitanih iz baze podataka.
+     *
+     * @return lista racuna
+     */
     public ArrayList<Racun> getLista() {
         return lista;
     }
