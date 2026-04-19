@@ -8,13 +8,34 @@ import java.util.ArrayList;
 import so.SistemskeOperacije;
 
 /**
+ * Sistemska operacija za prijavu administratora na sistem.
+ * <p>
+ * Klasa nasledjuje apstraktnu klasu SistemskeOperacije i implementira metode validate()
+ * i execute().
+ * </p>
  *
  * @author PAVLE
  */
 public class SOLogin extends SistemskeOperacije {
 
+    /**
+     * Administrator koji je uspesno prijavljen na sistem.
+     */
     Administrator ulogovani;
 
+    /**
+     * Proverava ispravnost prosledjenog objekta pre nego sto se izvrsi
+     * prijavljivanje na sistem. Metoda proverava:
+     * <ul>
+     * <li>Da li je objekat instanca klase Administrator.</li>
+     * <li>Da li je administrator vec prijavljen.</li>
+     * </ul>
+     * Ako bilo koji od uslova nije ispunjen, baca se izuzetak.
+     *
+     * @param ado Domen objekat koji se proverava
+     * @throws java.lang.Exception ako objekat nije instanca klase Administrator
+     * ili ako je administrator vec ulogovan
+     */
     @Override
     protected void validate(AbstractDomainObject ado) throws Exception {
         if (!(ado instanceof Administrator)) {
@@ -31,6 +52,17 @@ public class SOLogin extends SistemskeOperacije {
 
     }
 
+    /**
+     * Izvrsava prijavu administratora na sistem.
+     * <p>
+     * Pretrazuje bazu i proverava da li postoji administrator sa prosledjenim
+     * username-om i lozinkom. Ako je prijava uspesna, dodaje administratora u
+     * listu ulogovanih korisnika.
+     * </p>
+     *
+     * @param ado Domen objekat koji se pretrazuje
+     * @throws java.lang.Exception ako username ili lozinka nisu ispravni
+     */
     @Override
     protected void execute(AbstractDomainObject ado) throws Exception {
 
@@ -53,6 +85,11 @@ public class SOLogin extends SistemskeOperacije {
 
     }
 
+    /**
+     * Vraca administratora koji je uspesno prijavljen na sistem.
+     *
+     * @return ulogovani administrator ili null ako prijava nije izvrsena
+     */
     public Administrator getUlogovani() {
         return ulogovani;
     }
