@@ -1,54 +1,63 @@
 package so.administrator;
 
-import com.pavledimitrijevic.prodavnicaracunara.AbstractDomainObject;
+import com.pavledimitrijevic.prodavnicaracunara.Administrator;
+import com.pavledimitrijevic.prodavnicaracunara.Racunar;
+import db.DBBroker;
+import java.sql.SQLException;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.DisplayName;
 
 /**
  *
  * @author PAVLE
  */
 public class SODeleteAdministratorTest {
-    
-    public SODeleteAdministratorTest() {
-    }
-    
-    @BeforeAll
-    public static void setUpClass() {
-    }
-    
-    @AfterAll
-    public static void tearDownClass() {
-    }
-    
+
+    private SODeleteAdministrator soDelete;
+    private Administrator administrator;
+
     @BeforeEach
-    public void setUp() {
+    void setUp() {
+        soDelete = new SODeleteAdministrator();
+        administrator = new Administrator();
     }
-    
+
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
+        soDelete = null;
+        administrator = null;
     }
 
     @Test
-    public void testValidate() throws Exception {
-        System.out.println("validate");
-        AbstractDomainObject ado = null;
-        SODeleteAdministrator instance = new SODeleteAdministrator();
-        instance.validate(ado);
-        fail("The test case is a prototype.");
+    @DisplayName("Uspesno brisanje administratora")
+    void testExecuteSuccessful() throws SQLException {
+        administrator.setIme("TestDelete");
+        administrator.setPrezime("Execute");
+        administrator.setUsername("user" + System.currentTimeMillis());
+        administrator.setPassword("test12345");
+
+        DBBroker.getInstance().insert(administrator); // dodavanje testnog administratora za potrebe testa
+
+        assertDoesNotThrow(() -> soDelete.validate(administrator));
+        assertDoesNotThrow(() -> soDelete.execute(administrator));
+
+        DBBroker.getInstance().delete(administrator); // ciscenje baze da se ne bi popunila podacima
+
     }
 
     @Test
-    public void testExecute() throws Exception {
-        System.out.println("execute");
-        AbstractDomainObject ado = null;
-        SODeleteAdministrator instance = new SODeleteAdministrator();
-        instance.execute(ado);
-        fail("The test case is a prototype.");
+    @DisplayName("Pogresan tip podataka")
+    void testValidationInvalidType() {
+        assertThrows(java.lang.Exception.class, () -> soDelete.validate(new Racunar()));
+
     }
-    
+
+    @Test
+    @DisplayName("Validacija ispravnog tipa")
+    void testValidation() {
+        assertDoesNotThrow(() -> soDelete.validate(administrator));
+    }
 }
