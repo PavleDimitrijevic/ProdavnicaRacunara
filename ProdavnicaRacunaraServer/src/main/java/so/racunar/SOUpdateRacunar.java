@@ -7,11 +7,30 @@ import java.util.ArrayList;
 import so.SistemskeOperacije;
 
 /**
+ * Sistemska operacija za izmenu postojeceg racunara u bazi podataka.
+ * <p>
+ * Klasa nasledjuje apstraktnu klasu SistemskeOperacije i implementira metode
+ * validate() i execute().
+ * </p>
  *
  * @author PAVLE
  */
 public class SOUpdateRacunar extends SistemskeOperacije {
 
+    /**
+     * Proverava ispravnost prosledjenog objekta pre nego sto se izvrsi izmena u
+     * bazi. Metoda proverava:
+     * <ul>
+     * <li>Da li je objekat instanca klase Racunar.</li>
+     * <li>Da li vec postoji racunar sa istim nazivom u bazi.</li>
+     * <li>Da li je cena u rasponu od 100000 do 500000 dinara.</li>
+     * </ul>
+     * Ako bilo koji od uslova nije ispunjen, baca se izuzetak.
+     *
+     * @param ado Domen objekat koji se proverava
+     * @throws java.lang.Exception ako objekat nije instanca klase Racunar, cena
+     * nije validna ili naziv vec postoji u bazi
+     */
     @Override
     protected void validate(AbstractDomainObject ado) throws Exception {
         if (!(ado instanceof Racunar)) {
@@ -36,6 +55,18 @@ public class SOUpdateRacunar extends SistemskeOperacije {
 
     }
 
+    /**
+     * Izvrsava izmenu racunara u bazi podataka.
+     * <p>
+     * Poziva se samo ako je validacija uspesno prosla. Implementacija koristi
+     * update metodu iz klase DBBroker kako bi izmenila zapis u bazi podataka.
+     * </p>
+     *
+     * @see DBBroker
+     * @param ado Domen objekat koji se menja
+     * @throws java.lang.Exception ako dodje do greske tokom izvrsavanja SQL
+     * komande za izmenu u bazi
+     */
     @Override
     protected void execute(AbstractDomainObject ado) throws Exception {
         DBBroker.getInstance().update(ado);
