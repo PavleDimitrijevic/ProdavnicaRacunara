@@ -114,7 +114,9 @@ public class ServerController {
         SOGetAllRacunar so = new SOGetAllRacunar();
 
         Racunar r = new Racunar();
-        r.setTipRacunara(tr);
+        if (tr != null) {
+            r.setTipRacunara(tr);
+        }
 
         so.executeTemplate(r);
         return so.getLista();

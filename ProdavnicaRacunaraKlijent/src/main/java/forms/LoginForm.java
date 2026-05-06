@@ -119,10 +119,9 @@ public class LoginForm extends javax.swing.JFrame {
 
             Administrator administrator = ClientController.getInstance().login(a);
             Session.getInstance().setUlogovani(administrator);
-            System.out.println("Radi");
 
-            //new MainForm().setVisible(true);
-            //this.dispose();
+            new MainForm().setVisible(true);
+            this.dispose();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
