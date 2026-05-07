@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package form_administrator;
 
 
@@ -119,7 +114,7 @@ public class FormPretragaAdministratora extends javax.swing.JDialog {
         
         if (row >= 0) {
             Administrator a = ((TableModelAdministratori) tblAdministratori.getModel()).getSelectedAdministrator(row);
-            //new FormDetaljiAdministratora(this, true, a).setVisible(true);
+            new FormDetaljiAdministratora(this, true, a).setVisible(true);
         }
         
     }//GEN-LAST:event_btnDetaljiActionPerformed
