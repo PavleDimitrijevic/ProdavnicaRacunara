@@ -5,7 +5,7 @@ import com.pavledimitrijevic.prodavnicaracunara.Racun;
 import com.pavledimitrijevic.prodavnicaracunara.Racunar;
 import com.pavledimitrijevic.prodavnicaracunara.StavkaRacuna;
 import controller.ClientController;
-//import form_administrator.FormNoviAdministrator;
+import form_administrator.FormNoviAdministrator;
 //import form_administrator.FormPretragaAdministratora;
 //import form_racun.FormPretragaRacuna;
 //import form_racunar.FormNoviRacunar;
@@ -381,7 +381,7 @@ public class MainForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void miNoviAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miNoviAdminActionPerformed
-        // new FormNoviAdministrator(this, true).setVisible(true);
+         new FormNoviAdministrator(this, true).setVisible(true);
     }//GEN-LAST:event_miNoviAdminActionPerformed
 
     private void miPretragaAdminaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miPretragaAdminaActionPerformed
