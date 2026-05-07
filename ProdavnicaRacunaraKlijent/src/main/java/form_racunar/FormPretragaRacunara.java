@@ -1,6 +1,5 @@
 package form_racunar;
 
-
 import com.pavledimitrijevic.prodavnicaracunara.Racunar;
 import forms.MainForm;
 import models.TableModelRacunari;
@@ -115,7 +114,7 @@ public class FormPretragaRacunara extends javax.swing.JDialog {
 
         if (row >= 0) {
             Racunar r = ((TableModelRacunari) tblRacunari.getModel()).getSelectedRacunar(row);
-            //new FormDetaljiRacunara(this, true, r).setVisible(true);
+            new FormDetaljiRacunara(this, true, r).setVisible(true);
         }
 
     }//GEN-LAST:event_btnDetaljiActionPerformed
