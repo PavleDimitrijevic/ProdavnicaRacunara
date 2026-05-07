@@ -11,7 +11,7 @@ import form_racun.FormPretragaRacuna;
 import form_racunar.FormNoviRacunar;
 import form_racunar.FormPretragaRacunara;
 import form_tip_racunara.FormNoviTipRacunara;
-//import form_tip_racunara.FormPretragaTipaRacunara;
+import form_tip_racunara.FormPretragaTipaRacunara;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -536,7 +536,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_miNoviTipActionPerformed
 
     private void miPretragaTipaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miPretragaTipaActionPerformed
-        // new FormPretragaTipaRacunara(this, true).setVisible(true);
+        new FormPretragaTipaRacunara(this, true).setVisible(true);
     }//GEN-LAST:event_miPretragaTipaActionPerformed
 
     private void btnOdjavaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOdjavaActionPerformed
