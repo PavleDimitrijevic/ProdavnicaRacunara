@@ -8,7 +8,7 @@ import controller.ClientController;
 import form_administrator.FormNoviAdministrator;
 import form_administrator.FormPretragaAdministratora;
 import form_racun.FormPretragaRacuna;
-//import form_racunar.FormNoviRacunar;
+import form_racunar.FormNoviRacunar;
 import form_racunar.FormPretragaRacunara;
 //import form_tip_racunara.FormNoviTipRacunara;
 //import form_tip_racunara.FormPretragaTipaRacunara;
@@ -389,7 +389,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_miPretragaAdminaActionPerformed
 
     private void miNoviRacunarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miNoviRacunarActionPerformed
-        // new FormNoviRacunar(this, true).setVisible(true);
+        new FormNoviRacunar(this, true).setVisible(true);
     }//GEN-LAST:event_miNoviRacunarActionPerformed
 
     private void miPretragaRacunaraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miPretragaRacunaraActionPerformed
