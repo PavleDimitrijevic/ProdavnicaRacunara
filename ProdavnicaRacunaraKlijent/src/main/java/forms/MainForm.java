@@ -486,9 +486,13 @@ public class MainForm extends javax.swing.JFrame {
         int kolicina = Integer.parseInt(txtKolicina.getText());
         double cenaStavke = Double.parseDouble(txtCenaStavke.getText());
 
-        StavkaRacuna sr = new StavkaRacuna(null, -1, kolicina, cenaStavke, r);
-
         TableModelStavke tm = (TableModelStavke) tblStavke.getModel();
+
+        StavkaRacuna sr = new StavkaRacuna();
+        sr.setKolicina(kolicina);
+        sr.setCena(cenaStavke);
+        sr.setRacunar(r);
+
         tm.dodajStavku(sr);
 
         cena = tm.vratiCenuRacuna();
@@ -502,7 +506,16 @@ public class MainForm extends javax.swing.JFrame {
         try {
             TableModelStavke tm = (TableModelStavke) tblStavke.getModel();
 
-            Racun r = new Racun(null, new Date(), cena, ulogovani, tm.getLista());
+            if (tm.getLista().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Racun mora imati bar jednu stavku!");
+                return;
+            }
+
+            Racun r = new Racun();
+            r.setDatumVreme(new Date());
+            r.setCena(cena);
+            r.setAdministrator(ulogovani);
+            r.setStavkeRacuna(tm.getLista());
 
             ClientController.getInstance().addRacun(r);
             resetujFormu();
@@ -510,7 +523,6 @@ public class MainForm extends javax.swing.JFrame {
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
-//            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_btnSacuvajActionPerformed
