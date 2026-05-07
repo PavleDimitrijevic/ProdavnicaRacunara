@@ -116,7 +116,7 @@ public class FormPretragaTipaRacunara extends javax.swing.JDialog {
 
         if (row >= 0) {
             TipRacunara tr = ((TableModelTipRacunara) tblTipovi.getModel()).getSelectedTipRacunara(row);
-            //  new FormDetaljiTipaRacunara(this, true, tr).setVisible(true);
+            new FormDetaljiTipaRacunara(this, true, tr).setVisible(true);
         }
 
     }//GEN-LAST:event_btnDetaljiActionPerformed
