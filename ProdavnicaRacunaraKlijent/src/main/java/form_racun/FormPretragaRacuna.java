@@ -113,7 +113,7 @@ public class FormPretragaRacuna extends javax.swing.JDialog {
 
         if (row >= 0) {
             Racun r = ((TableModelRacuni) tblPoslastice.getModel()).getSelectedRacun(row);
-            // new FormDetaljiRacuna(this, true, r).setVisible(true);
+            new FormDetaljiRacuna(this, true, r).setVisible(true);
         }
 
     }//GEN-LAST:event_btnDetaljiActionPerformed
