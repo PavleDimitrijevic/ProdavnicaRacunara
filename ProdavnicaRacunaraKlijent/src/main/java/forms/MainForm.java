@@ -10,7 +10,7 @@ import form_administrator.FormPretragaAdministratora;
 import form_racun.FormPretragaRacuna;
 import form_racunar.FormNoviRacunar;
 import form_racunar.FormPretragaRacunara;
-//import form_tip_racunara.FormNoviTipRacunara;
+import form_tip_racunara.FormNoviTipRacunara;
 //import form_tip_racunara.FormPretragaTipaRacunara;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -532,7 +532,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_miPretragaRacunaActionPerformed
 
     private void miNoviTipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miNoviTipActionPerformed
-        // new FormNoviTipRacunara(this, true).setVisible(true);
+        new FormNoviTipRacunara(this, true).setVisible(true);
     }//GEN-LAST:event_miNoviTipActionPerformed
 
     private void miPretragaTipaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miPretragaTipaActionPerformed
