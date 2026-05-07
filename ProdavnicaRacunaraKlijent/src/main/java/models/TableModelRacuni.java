@@ -24,6 +24,7 @@ public class TableModelRacuni extends AbstractTableModel implements Runnable {
             lista = ClientController.getInstance().getAllRacun(null);
         } catch (Exception ex) {
             Logger.getLogger(TableModelRacuni.class.getName()).log(Level.SEVERE, null, ex);
+            lista = new ArrayList<>();
         }
     }
 
@@ -32,6 +33,7 @@ public class TableModelRacuni extends AbstractTableModel implements Runnable {
             lista = ClientController.getInstance().getAllRacun(a);
         } catch (Exception ex) {
             Logger.getLogger(TableModelRacuni.class.getName()).log(Level.SEVERE, null, ex);
+            lista = new ArrayList<>();
         }
     }
 

@@ -104,7 +104,9 @@ public class ServerController {
         SOGetAllRacun so = new SOGetAllRacun();
 
         Racun ra = new Racun();
-        ra.setAdministrator(admin);
+        if (admin != null) {
+            ra.setAdministrator(admin);
+        }
 
         so.executeTemplate(ra);
         return so.getLista();
