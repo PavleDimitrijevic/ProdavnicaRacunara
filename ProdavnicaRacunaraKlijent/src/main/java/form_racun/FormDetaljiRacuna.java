@@ -1,8 +1,16 @@
 package form_racun;
 
 import com.pavledimitrijevic.prodavnicaracunara.Racun;
+import com.pavledimitrijevic.prodavnicaracunara.StavkaRacuna;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import models.TableModelStavke;
+import util.JsonExporter;
 
 /**
  *
@@ -38,6 +46,7 @@ public class FormDetaljiRacuna extends javax.swing.JDialog {
         tblStavke = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         lblCena = new javax.swing.JLabel();
+        btnExportJson = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -97,6 +106,13 @@ public class FormDetaljiRacuna extends javax.swing.JDialog {
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
+        btnExportJson.setText("Izvezi racun u JSON");
+        btnExportJson.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportJsonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -105,7 +121,9 @@ public class FormDetaljiRacuna extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addContainerGap()
+                        .addComponent(btnExportJson, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnOtkazi1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -115,7 +133,9 @@ public class FormDetaljiRacuna extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnOtkazi1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnOtkazi1, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                    .addComponent(btnExportJson, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -143,8 +163,85 @@ public class FormDetaljiRacuna extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btnOtkazi1ActionPerformed
 
+    private void btnExportJsonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportJsonActionPerformed
+        try {
+            if (r == null) {
+                JOptionPane.showMessageDialog(this, "Racun nije ucitan!");
+                return;
+            }
+
+            JFileChooser chooser = new JFileChooser();
+            chooser.setDialogTitle("Sacuvaj racun kao JSON");
+
+            int rezultat = chooser.showSaveDialog(this);
+
+            if (rezultat != JFileChooser.APPROVE_OPTION) {
+                return;
+            }
+
+            String path = chooser.getSelectedFile().getAbsolutePath();
+
+            if (!path.endsWith(".json")) {
+                path += ".json";
+            }
+
+            JsonExporter.exportToJson(kreirajJsonObjekatZaRacun(), path);
+            JOptionPane.showMessageDialog(this, "Racun je uspesno izvezen u JSON fajl.");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_btnExportJsonActionPerformed
+
+    private Map<String, Object> kreirajJsonObjekatZaRacun() {
+        Map<String, Object> racunJson = new LinkedHashMap<>();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+
+        racunJson.put("racunID", r.getRacunID());
+        racunJson.put("datumVreme", sdf.format(r.getDatumVreme()));
+        racunJson.put("cena", r.getCena());
+
+        Map<String, Object> administratorJson = new LinkedHashMap<>();
+        administratorJson.put("administratorID", r.getAdministrator().getAdministratorID());
+        administratorJson.put("ime", r.getAdministrator().getIme());
+        administratorJson.put("prezime", r.getAdministrator().getPrezime());
+        administratorJson.put("username", r.getAdministrator().getUsername());
+
+        racunJson.put("administrator", administratorJson);
+
+        ArrayList<Map<String, Object>> stavkeJson = new ArrayList<>();
+
+        if (r.getStavkeRacuna() != null) {
+            for (StavkaRacuna stavka : r.getStavkeRacuna()) {
+                Map<String, Object> stavkaJson = new LinkedHashMap<>();
+
+                stavkaJson.put("rb", stavka.getRb());
+                stavkaJson.put("kolicina", stavka.getKolicina());
+                stavkaJson.put("cena", stavka.getCena());
+
+                Map<String, Object> racunarJson = new LinkedHashMap<>();
+                racunarJson.put("racunarID", stavka.getRacunar().getRacunarID());
+                racunarJson.put("naziv", stavka.getRacunar().getNaziv());
+                racunarJson.put("cenaPoKomadu", stavka.getRacunar().getCenaPoKomadu());
+                racunarJson.put("opis", stavka.getRacunar().getOpis());
+
+                if (stavka.getRacunar().getTipRacunara() != null) {
+                    racunarJson.put("tipRacunara", stavka.getRacunar().getTipRacunara().getNaziv());
+                }
+
+                stavkaJson.put("racunar", racunarJson);
+                stavkeJson.add(stavkaJson);
+            }
+        }
+
+        racunJson.put("stavkeRacuna", stavkeJson);
+
+        return racunJson;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnExportJson;
     private javax.swing.JButton btnOtkazi1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
